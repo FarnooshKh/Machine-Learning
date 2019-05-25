@@ -2,12 +2,6 @@ import numpy as np
 import pandas as pd
 from sklearn.datasets import load_iris
 
-def f(x):
-    return {
-        0: 'Iris-setosa',
-        1: 'Iris-versicolor',
-        2: 'Iris-virginica',
-    }[x]
 
 # save load_iris() sklearn dataset to iris
 iris = load_iris()
@@ -16,8 +10,10 @@ iris = load_iris()
 # for pandas column argument: concat iris['feature_names'] list
 data = pd.DataFrame(data= np.c_[iris['data'], iris['target']],
                      columns= iris['feature_names'] + ['target'])
-data['class'] = f(iris['target'])
 
+data.loc[ data['target'] == 0, 'class' ] = 'Iris-setosa'
+data.loc[ data['target'] == 1, 'class' ] = 'Iris-versicolor'
+data.loc[ data['target'] == 2, 'class' ] = 'Iris-virginica'
 
 
 data.to_csv('Data/iris.csv')
